@@ -81,13 +81,12 @@ export function Registration() {
   return (
     <div>
 
-      <div className='row justify-content-between mb-5'>
-        <div className="d-flex align-items-center me-2">
+      <div className='d-flex flex-wrap justify-content-between pb-lg-0 align-items-center'>
+       
           <Link to='/auth/login' className="btn btn-icon bg-light rounded-circle">
             <i className="ki-outline ki-black-left fs-2 text-gray-800"></i>
           </Link>
-        </div>
-        <div className="d-flex align-items-center">
+        <div >
           <span className="text-gray-500 fw-bold fs-5 me-2" data-kt-translate="sign-in-head-desc">Already a Member?</span>
           <Link to='/auth/login' className='link-primary fw-bold fs-5'>
             Sign in
