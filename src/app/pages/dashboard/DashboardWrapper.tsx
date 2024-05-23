@@ -125,10 +125,9 @@ const DashboardWrapper: FC = () => {
   return (
   <div  className={clsx('main rounded', config.app?.sidebar?.default?.class, {
              
-              'bg-white': config.layoutType === 'light-sidebar',
-               'bg-dark': config.layoutType === 'dark-sidebar',
-
-          })}  
+        'bg-white': config.layoutType === 'light-sidebar',
+        'bg-dark': config.layoutType === 'dark-sidebar',
+      })}  
           // style={{ maxHeight: 'calc(100vh - 120px)', overflowY: 'auto'}}
           >
       <PageTitle breadcrumbs={[]}>{intl.formatMessage({ id: 'MENU.DASHBOARD' })}</PageTitle>
