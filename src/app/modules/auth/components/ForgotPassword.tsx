@@ -46,12 +46,12 @@ export function ForgotPassword() {
     <div>
        <div className='d-flex flex-wrap justify-content-between pb-lg-0 align-items-center'>
        
-          <Link to='/auth/login' className="btn btn-icon bg-light rounded-circle">
+          <Link to='/' className="btn btn-icon bg-light rounded-circle">
             <i className="ki-outline ki-black-left fs-2 text-gray-800"></i>
           </Link>
         <div>
           <span className="text-gray-500 fw-bold fs-5 me-2" data-kt-translate="sign-in-head-desc">Already a Member?</span>
-          <Link to='/auth/login' className='link-primary fw-bold fs-5'>
+          <Link to='/' className='link-primary fw-bold fs-5'>
             Sign in
           </Link>
         </div>
@@ -129,7 +129,7 @@ export function ForgotPassword() {
               </span>
             )}
           </button>
-          <Link to='/auth/login'>
+          <Link to='/'>
             <button
               type='button'
               id='kt_login_password_reset_form_cancel_button'

@@ -6,6 +6,10 @@ import { useFormik } from 'formik';
 import { getUserByToken, login } from '../core/_requests';
 import { toAbsoluteUrl } from '../../../../_metronic/helpers';
 import { useAuth } from '../core/Auth';
+import { toast, ToastContainer, ToastOptions, Id } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
+import { TraceInfoType } from '../core/_models';
+import { useNavigate } from 'react-router-dom';
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -24,9 +28,38 @@ const initialValues = {
   password: '',
 };
 
+function getToastOptions(messageType: number): { type: string; color: string } {
+  switch (messageType) {
+    case TraceInfoType.Debug:
+      return { type: 'info', color: 'grey' };
+    case TraceInfoType.Success:
+      return { type: 'success', color: 'green' };
+    case TraceInfoType.Information:
+      return { type: 'info', color: 'blue' };
+    case TraceInfoType.Warning:
+      return { type: 'warning', color: 'orange' };
+    case TraceInfoType.Error:
+      return { type: 'error', color: 'red' };
+    case TraceInfoType.Critical:
+      return { type: 'error', color: 'red' };
+    case TraceInfoType.Fatal:
+      return { type: 'error', color: 'red' };
+    case TraceInfoType.UpgradeError:
+      return { type: 'error', color: 'red' };
+    case TraceInfoType.Upgrade:
+      return { type: 'info', color: 'blue' };
+    default:
+      return { type: 'error', color: 'black' }; // Default to error and black color
+  }
+}
+
+
 export function Login() {
   const [loading, setLoading] = useState(false);
   const { saveAuth, setCurrentUser } = useAuth();
+  
+  const navigate = useNavigate()
+
 
   const formik = useFormik({
     initialValues,
@@ -36,8 +69,36 @@ export function Login() {
       try {
         const { data: auth } = await login(values.email, values.password);
         saveAuth(auth);
-        const { data: user } = await getUserByToken(auth.api_token);
-        setCurrentUser(user);
+        console.log(auth);
+
+        if(auth.isValid === true){
+          
+          const { data: user } = await getUserByToken(auth.result.token);
+          setCurrentUser(user);          
+          toast.success(auth.messages[0].message);
+          navigate('/dashboard');
+        }
+
+        else{
+          
+          let errorMessage = auth.messages[0].message
+          let messageType = auth.messages[0].type;
+          const { type, color } = getToastOptions(messageType);
+          const toastFunction = toast[type as keyof typeof toast] as (errorMessage: string, options?: ToastOptions) => Id;
+
+         toastFunction(errorMessage
+          // , {
+          //   style: {
+          //     backgroundColor: color,
+          //     color:"white"
+          //   }
+          // }
+        );
+        
+          setSubmitting(false);
+          setLoading(false);
+        }
+          
       } catch (error) {
         console.error(error);
         saveAuth(undefined);
@@ -50,11 +111,13 @@ export function Login() {
 
   return (
     <div>
+
       <div className='text-end mb-5'>
          <span className="text-gray-500 fw-bold fs-5 me-2" data-kt-translate="sign-in-head-desc">Not a Member yet?</span>
-        <Link to='/auth/registration' className='link-primary fw-bold fs-5'>
+        <Link to='/registration' className='link-primary fw-bold fs-5'>
           Sign up
         </Link>
+        
       </div>
 
       <form
@@ -62,8 +125,7 @@ export function Login() {
         onSubmit={formik.handleSubmit}
         noValidate
         id='kt_login_signin_form'
-      >
-        {/* Not a member yet? Sign up link */}
+        >
       
 
         {/* Large text: Sign In */}
@@ -90,7 +152,9 @@ export function Login() {
             />
             {formik.touched.email && formik.errors.email && (
               <div className='fv-plugins-message-container'>
+                <div className='fv-help-block'>
                 <span role='alert'>{formik.errors.email}</span>
+                </div>
               </div>
             )}
           </div>
@@ -117,11 +181,12 @@ export function Login() {
 
           {/* Forgot Password link */}
           <div className='text-end'>
-            <Link to='/auth/forgot-password' className='link-primary'>
+            <Link to='/forgot-password' className='link-primary'>
               Forgot password?
             </Link>
           </div>
         </div>
+        
 
         {/* Sign in options: Sign in with Google, Facebook, Apple */}
         <div className='d-flex justify-content-between align-items-center mb-5'>
@@ -140,9 +205,15 @@ export function Login() {
               </span>
             )}
           </button>
+          
         </div>
-
+       
+        <ToastContainer 
+          position="bottom-left" 
+          draggable
+          />
       </form>
+      
     </div>
 
   );

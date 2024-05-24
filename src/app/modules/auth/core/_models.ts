@@ -1,6 +1,14 @@
 export interface AuthModel {
   api_token: string
   refreshToken?: string
+  isValid?: boolean
+  messages: [{
+    message: string
+    type: number
+  }]
+  result:{
+    token:string
+  }
 }
 
 export interface UserAddressModel {
@@ -9,6 +17,7 @@ export interface UserAddressModel {
   state: string
   postCode: string
 }
+
 
 export interface UserCommunicationModel {
   email: boolean
@@ -65,3 +74,17 @@ export interface UserModel {
   address?: UserAddressModel
   socialNetworks?: UserSocialNetworksModel
 }
+
+export enum TraceInfoType {
+  Debug = 0,
+  Success = 1,
+  Information = 2,
+  Warning = 3,
+  Error = 4,
+  Critical = 5,
+  Fatal = 6,
+  UpgradeError = 99,
+  Upgrade = 98
+}
+
+// Define corresponding colors
