@@ -86,5 +86,3 @@ export enum TraceInfoType {
   UpgradeError = 99,
   Upgrade = 98
 }
-
-// Define corresponding colors

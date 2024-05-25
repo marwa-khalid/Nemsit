@@ -72,10 +72,11 @@ export function Login() {
         console.log(auth);
 
         if(auth.isValid === true){
-          
+          console.log("working")
+            
+          toast.success("Login Successfull");
           const { data: user } = await getUserByToken(auth.result.token);
-          setCurrentUser(user);          
-          toast.success(auth.messages[0].message);
+          setCurrentUser(user);      
           navigate('/dashboard');
         }
 
