@@ -6,6 +6,7 @@ export const GET_USER_BY_ACCESSTOKEN_URL = `${API_URL}/verify_token`;
 export const LOGIN_URL = `https://api.invoicehippo.nl/api/v1/authorization/authorize`;
 export const REGISTER_URL = `${API_URL}/register`;
 export const REQUEST_PASSWORD_URL = `${API_URL}/forgot_password`;
+export const GET_PROFILE_INFO = `https://api.invoicehippo.nl/api/v1/profile/info`;
 
 // Server should return AuthModel
 export function login(email: string, password: string) {
@@ -42,8 +43,14 @@ export function requestPassword(email: string) {
   });
 }
 
-export function getUserByToken(token: string) {
-  return axios.post<UserModel>(GET_USER_BY_ACCESSTOKEN_URL, {
-    api_token: token,
-  });
+// export function getUserByToken(token: string) {
+//   return axios.post<UserModel>(GET_USER_BY_ACCESSTOKEN_URL, {
+//     api_token: token,
+//   });
+// }
+
+
+export function getProfileInfo(token: string) {
+    const headers = {"Authorization": "Bearer " + token}
+    return axios.get( GET_PROFILE_INFO,{headers});
 }

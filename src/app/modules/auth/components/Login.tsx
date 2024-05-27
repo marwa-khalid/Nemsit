@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { getUserByToken, login } from '../core/_requests';
+import { getProfileInfo, login } from '../core/_requests';
 import { toAbsoluteUrl } from '../../../../_metronic/helpers';
 import { useAuth } from '../core/Auth';
 import { toast, ToastContainer, ToastOptions, Id } from 'react-toastify'; 
@@ -57,9 +57,6 @@ function getToastOptions(messageType: number): { type: string; color: string } {
 export function Login() {
   const [loading, setLoading] = useState(false);
   const { saveAuth, setCurrentUser } = useAuth();
-  
-  const navigate = useNavigate()
-
 
   const formik = useFormik({
     initialValues,
@@ -68,34 +65,24 @@ export function Login() {
       setLoading(true);
       try {
         const { data: auth } = await login(values.email, values.password);
-        saveAuth(auth);
-        console.log(auth);
-
-        if(auth.isValid === true){
-          console.log("working")
-            
-          toast.success("Login Successfull");
-          const { data: user } = await getUserByToken(auth.result.token);
-          setCurrentUser(user);      
-          navigate('/dashboard');
+        
+        if(auth.isValid === true){ 
+          saveAuth(auth);
+          const { data: user } = await getProfileInfo(auth.result.token);
+          if(user){
+            setCurrentUser(user); 
+          }   
         }
 
         else{
           
           let errorMessage = auth.messages[0].message
           let messageType = auth.messages[0].type;
+         
           const { type, color } = getToastOptions(messageType);
           const toastFunction = toast[type as keyof typeof toast] as (errorMessage: string, options?: ToastOptions) => Id;
 
-         toastFunction(errorMessage
-          // , {
-          //   style: {
-          //     backgroundColor: color,
-          //     color:"white"
-          //   }
-          // }
-        );
-        
+         toastFunction(errorMessage);
           setSubmitting(false);
           setLoading(false);
         }

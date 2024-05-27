@@ -3,7 +3,7 @@ import {FC, useState, useEffect, createContext, useContext, Dispatch, SetStateAc
 import {LayoutSplashScreen} from '../../../../_metronic/layout/core'
 import {AuthModel, UserModel} from './_models'
 import * as authHelper from './AuthHelpers'
-import {getUserByToken} from './_requests'
+import {getProfileInfo} from './_requests'
 import {WithChildren} from '../../../../_metronic/helpers'
 
 type AuthContextProps = {
@@ -31,14 +31,40 @@ const useAuth = () => {
 const AuthProvider: FC<WithChildren> = ({children}) => {
   const [auth, setAuth] = useState<AuthModel | undefined>(authHelper.getAuth())
   const [currentUser, setCurrentUser] = useState<UserModel | undefined>()
-  const saveAuth = (auth: AuthModel | undefined) => {
-    setAuth(auth)
-    if (auth) {
-      authHelper.setAuth(auth)
-    } else {
-      authHelper.removeAuth()
+
+    const requestUser = async (apiToken: string) => {
+      try {
+        if (!currentUser) {
+          const {data} = await getProfileInfo(apiToken)
+          if (data) {
+            setCurrentUser(data)  
+          }
+        }
+      } catch (error) {
+        console.error(error)
+        if (currentUser) {
+          logout()
+        }
+      } 
     }
-  }
+  const saveAuth = (auth: AuthModel | undefined) => {
+    console.log(auth)
+    setAuth(auth)
+    if (auth && auth.result.token) {
+      //Check if the token has expired
+      console.log(auth.result.token)
+      if (auth.result.tokenIsValid) {
+          console.log("Token is valid");
+          authHelper.setAuth(auth)
+          requestUser(auth.result.token);
+      } else {
+          console.log("Token has expired. Please log in again.");
+      
+    }} 
+    else {
+        authHelper.removeAuth()
+      }
+    }
 
   const logout = () => {
     saveAuth(undefined)
@@ -56,14 +82,16 @@ const AuthInit: FC<WithChildren> = ({children}) => {
   const {auth, currentUser, logout, setCurrentUser} = useAuth()
   const [showSplashScreen, setShowSplashScreen] = useState(true)
 
-  // We should request user by authToken (IN OUR EXAMPLE IT'S API_TOKEN) before rendering the application
+ 
   useEffect(() => {
     const requestUser = async (apiToken: string) => {
       try {
         if (!currentUser) {
-          const {data} = await getUserByToken(apiToken)
+          const {data} = await getProfileInfo(apiToken)
           if (data) {
+            console.log(data)
             setCurrentUser(data)
+            
           }
         }
       } catch (error) {
@@ -76,9 +104,19 @@ const AuthInit: FC<WithChildren> = ({children}) => {
       }
     }
 
-    if (auth && auth.api_token) {
-      requestUser(auth.api_token)
-    } else {
+    if (auth && auth.result.token) {
+      
+      // Check if the token has expired
+      if (auth.result.tokenIsValid) {
+        console.log("Token is valid");
+        requestUser(auth.result.token);
+      } else {
+        console.log("Token has expired. Please log in again.");
+     
+        logout();
+        setShowSplashScreen(false);
+    
+    }} else {
       logout()
       setShowSplashScreen(false)
     }

@@ -17,7 +17,7 @@ const Sidebar = () => {
   if (!config.app?.sidebar?.display) {
     return null
   }
-
+ console.log(config.layoutType)
    return (
     <>
       {(config.layoutType === 'dark-sidebar' || config.layoutType === 'light-sidebar') && (
@@ -46,6 +46,7 @@ const Sidebar = () => {
 
 
 const updateDOM = (config: ILayout) => {
+  console.log(config)
   if (config.layoutType === 'dark-sidebar' || config.layoutType === 'light-sidebar') {
     if (config.app?.sidebar?.default?.minimize?.desktop?.enabled) {
       if (config.app?.sidebar?.default?.minimize?.desktop?.default) {
