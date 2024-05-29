@@ -3,13 +3,10 @@ import * as Yup from 'yup';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { getProfileInfo, login } from '../core/_requests';
-import { toAbsoluteUrl } from '../../../../_metronic/helpers';
+import { login } from '../core/_requests';
 import { useAuth } from '../core/Auth';
-import { toast, ToastContainer, ToastOptions, Id } from 'react-toastify'; 
+import { ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
-import { TraceInfoType } from '../core/_models';
-import { useNavigate } from 'react-router-dom';
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -28,35 +25,10 @@ const initialValues = {
   password: '',
 };
 
-function getToastOptions(messageType: number): { type: string; color: string } {
-  switch (messageType) {
-    case TraceInfoType.Debug:
-      return { type: 'info', color: 'grey' };
-    case TraceInfoType.Success:
-      return { type: 'success', color: 'green' };
-    case TraceInfoType.Information:
-      return { type: 'info', color: 'blue' };
-    case TraceInfoType.Warning:
-      return { type: 'warning', color: 'orange' };
-    case TraceInfoType.Error:
-      return { type: 'error', color: 'red' };
-    case TraceInfoType.Critical:
-      return { type: 'error', color: 'red' };
-    case TraceInfoType.Fatal:
-      return { type: 'error', color: 'red' };
-    case TraceInfoType.UpgradeError:
-      return { type: 'error', color: 'red' };
-    case TraceInfoType.Upgrade:
-      return { type: 'info', color: 'blue' };
-    default:
-      return { type: 'error', color: 'black' }; // Default to error and black color
-  }
-}
-
 
 export function Login() {
   const [loading, setLoading] = useState(false);
-  const { saveAuth, setCurrentUser } = useAuth();
+  const { saveAuth } = useAuth();
 
   const formik = useFormik({
     initialValues,
@@ -65,27 +37,8 @@ export function Login() {
       setLoading(true);
       try {
         const { data: auth } = await login(values.email, values.password);
-        
-        if(auth.isValid === true){ 
-          saveAuth(auth);
-          const { data: user } = await getProfileInfo(auth.result.token);
-          if(user){
-            setCurrentUser(user); 
-          }   
-        }
-
-        else{
-          
-          let errorMessage = auth.messages[0].message
-          let messageType = auth.messages[0].type;
-         
-          const { type, color } = getToastOptions(messageType);
-          const toastFunction = toast[type as keyof typeof toast] as (errorMessage: string, options?: ToastOptions) => Id;
-
-         toastFunction(errorMessage);
-          setSubmitting(false);
-          setLoading(false);
-        }
+        console.log(auth)         
+        saveAuth(auth);
           
       } catch (error) {
         console.error(error);
