@@ -4,6 +4,8 @@ import {PrivateRoutes} from './PrivateRoutes'
 import {ErrorsPage} from '../modules/errors/ErrorsPage'
 import {Logout, AuthPage, useAuth} from '../modules/auth'
 import {App} from '../App'
+import { Registration } from '../modules/auth/components/Registration'
+import { ForgotPassword } from '../modules/auth/components/ForgotPassword'
 
 /**
  * Base URL of the website.
@@ -31,6 +33,8 @@ const AppRoutes: FC = () => {
             <>
               <Route path='/' element={<AuthPage />} />
               <Route path='*' element={<Navigate to='/' />} />
+              <Route path='/register' element={<Registration />} />
+              <Route path='/forgot-password' element={<ForgotPassword />} />
             </>
           )}
         </Route>

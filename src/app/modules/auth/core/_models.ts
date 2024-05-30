@@ -2,7 +2,7 @@ export interface AuthModel {
   result: {
     token: string;
     bag?: string;
-    expirationDateUtc: string;
+    expirationDateUtc: Date;
     tokenIsValid: boolean;
     activeSessionTokenIsAllreadyValid: boolean;
     expirationDateUtcAsString: string;

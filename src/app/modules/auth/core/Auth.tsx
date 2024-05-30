@@ -34,48 +34,48 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
   const [currentUser, setCurrentUser] = useState<UserModel | undefined>()
 
   function getToastOptions(messageType: number): { type: string; color: string } {
-  switch (messageType) {
-    case TraceInfoType.Debug:
-      return { type: 'info', color: 'grey' };
-    case TraceInfoType.Success:
-      return { type: 'success', color: 'green' };
-    case TraceInfoType.Information:
-      return { type: 'info', color: 'blue' };
-    case TraceInfoType.Warning:
-      return { type: 'warning', color: 'orange' };
-    case TraceInfoType.Error:
-      return { type: 'error', color: 'red' };
-    case TraceInfoType.Critical:
-      return { type: 'error', color: 'red' };
-    case TraceInfoType.Fatal:
-      return { type: 'error', color: 'red' };
-    case TraceInfoType.UpgradeError:
-      return { type: 'error', color: 'red' };
-    case TraceInfoType.Upgrade:
-      return { type: 'info', color: 'blue' };
-    default:
-      return { type: 'error', color: 'black' }; 
-  }
-}
-
-
-    const requestUser = async (apiToken: string) => {
-      try {
-        if (!currentUser) {
-          const {data} = await getProfileInfo(apiToken)
-          if (data) {
-            
-            setCurrentUser(data)  
-            toast.success("Logged in successfully");
-          }
-        }
-      } catch (error) {
-        console.error(error)
-        if (currentUser) {
-          logout()
-        }
-      } 
+    switch (messageType) {
+      case TraceInfoType.Debug:
+        return { type: 'info', color: 'grey' };
+      case TraceInfoType.Success:
+        return { type: 'success', color: 'green' };
+      case TraceInfoType.Information:
+        return { type: 'info', color: 'blue' };
+      case TraceInfoType.Warning:
+        return { type: 'warning', color: 'orange' };
+      case TraceInfoType.Error:
+        return { type: 'error', color: 'red' };
+      case TraceInfoType.Critical:
+        return { type: 'error', color: 'red' };
+      case TraceInfoType.Fatal:
+        return { type: 'error', color: 'red' };
+      case TraceInfoType.UpgradeError:
+        return { type: 'error', color: 'red' };
+      case TraceInfoType.Upgrade:
+        return { type: 'info', color: 'blue' };
+      default:
+        return { type: 'error', color: 'black' }; 
     }
+  }
+
+  const requestUser = async (apiToken: string) => {
+    try {
+      if (!currentUser) {
+        const {data} = await getProfileInfo(apiToken)
+        if (data) {
+          
+          setCurrentUser(data)  
+          toast.success("Logged in successfully");
+        }
+      }
+    } catch (error) {
+      console.error(error)
+      if (currentUser) {
+        logout()
+      }
+    } 
+  }
+  
   const saveAuth = (auth: AuthModel | undefined) => {
     
     if (auth) {

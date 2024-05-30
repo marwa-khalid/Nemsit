@@ -36,12 +36,10 @@ export function Login() {
     onSubmit: async (values, { setStatus, setSubmitting }) => {
       setLoading(true);
       try {
-        const { data: auth } = await login(values.email, values.password);
-        console.log(auth)         
+        const { data: auth } = await login(values.email, values.password);         
         saveAuth(auth);
           
       } catch (error) {
-        console.error(error);
         saveAuth(undefined);
         setStatus('The login details are incorrect');
         setSubmitting(false);
@@ -150,7 +148,7 @@ export function Login() {
         </div>
        
         <ToastContainer 
-          position="bottom-left" 
+          position="top-center" 
           draggable
           />
       </form>
