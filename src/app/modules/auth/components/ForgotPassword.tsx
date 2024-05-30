@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
 import {requestPassword} from '../core/_requests'
-
+import { useNavigate } from 'react-router-dom'
 const initialValues = {
   email: 'admin@demo.com',
 }
@@ -20,26 +20,32 @@ const forgotPasswordSchema = Yup.object().shape({
 export function ForgotPassword() {
   const [loading, setLoading] = useState(false)
   const [hasErrors, setHasErrors] = useState<boolean | undefined>(undefined)
+  const [error, setError] = useState(null)
+  const navigate = useNavigate()
+
   const formik = useFormik({
     initialValues,
     validationSchema: forgotPasswordSchema,
-    onSubmit: (values, {setStatus, setSubmitting}) => {
+    onSubmit: async (values, {setStatus, setSubmitting}) => {
       setLoading(true)
       setHasErrors(undefined)
-      setTimeout(() => {
-        requestPassword(values.email)
-          .then(() => {
-            setHasErrors(false)
-            setLoading(false)
-          })
-          .catch(() => {
-            setHasErrors(true)
-            setLoading(false)
-            setSubmitting(false)
-            setStatus('The login detail is incorrect')
-          })
-      }, 1000)
-    },
+     
+      const { data: reset } = await requestPassword(values.email)
+      if(reset.isValid) {
+          console.log('Password')
+          setHasErrors(false)
+          setLoading(false)
+          navigate('/forgot-password/success',{ state: { textInfo: reset.textInfo } })
+      }
+      else{
+        let errorMessage = reset.messages[0].message
+        setError(errorMessage)
+        setHasErrors(true)
+        setLoading(false)
+        setSubmitting(false)
+        setStatus('The login detail is incorrect')
+      }
+    }
   })
 
   return (
@@ -79,7 +85,7 @@ export function ForgotPassword() {
         {hasErrors === true && (
           <div className='mb-lg-15 alert alert-danger'>
             <div className='alert-text font-weight-bold'>
-              Sorry, looks like there are some errors detected, please try again.
+              {error}
             </div>
           </div>
         )}

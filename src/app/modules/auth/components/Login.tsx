@@ -126,8 +126,6 @@ export function Login() {
           </div>
         </div>
         
-
-        {/* Sign in options: Sign in with Google, Facebook, Apple */}
         <div className='d-flex justify-content-between align-items-center mb-5'>
         
             <button

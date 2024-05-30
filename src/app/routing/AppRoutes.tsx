@@ -7,23 +7,16 @@ import {App} from '../App'
 import { Registration } from '../modules/auth/components/Registration'
 import { ForgotPassword } from '../modules/auth/components/ForgotPassword'
 
-/**
- * Base URL of the website.
- *
- * @see https://facebook.github.io/create-react-app/docs/using-the-public-folder
- */
 const {BASE_URL} = import.meta.env
 
 const AppRoutes: FC = () => {
   const {currentUser} = useAuth()
-  console.log(currentUser)
   return (
     <BrowserRouter basename={BASE_URL}>
       <Routes>
         <Route element={<App />}>
           <Route path='error/*' element={<ErrorsPage />} />
           <Route path='logout' element={<Logout />} />
-
           {currentUser ? (
             <>
               <Route path='/*' element={<PrivateRoutes />} />
@@ -31,10 +24,8 @@ const AppRoutes: FC = () => {
             </>
           ) : (
             <>
-              <Route path='/' element={<AuthPage />} />
+              <Route path='/*' element={<AuthPage />} />
               <Route path='*' element={<Navigate to='/' />} />
-              <Route path='/register' element={<Registration />} />
-              <Route path='/forgot-password' element={<ForgotPassword />} />
             </>
           )}
         </Route>

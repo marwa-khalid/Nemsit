@@ -3,7 +3,7 @@ import {KTIcon, toAbsoluteUrl} from '../../../helpers'
 import {HeaderNotificationsMenu, HeaderUserMenu, Search, ThemeModeSwitcher} from '../../../partials'
 import {useLayout} from '../../core'
 import { useAuth } from '../../../../app/modules/auth'
-
+import {toast} from 'react-toastify'
 const itemClass = 'ms-1 ms-md-4'
 const btnClass =
   'btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px'
@@ -13,6 +13,12 @@ const btnIconClass = 'fs-2'
 const Navbar = () => {
   const {config} = useLayout()
   const {logout} = useAuth()
+
+  const logOutFunction = () => {
+    logout()
+    toast.error("Logged out")
+  }
+
   return (
     <div className='app-navbar flex-shrink-0'>
       {/* <div className={clsx('app-navbar-item align-items-stretch', itemClass)}>
@@ -75,7 +81,7 @@ const Navbar = () => {
 
       <div className={clsx('app-navbar-item', itemClass)}>
         <div className={btnClass} >
-           <a onClick={logout} >
+           <a onClick={logOutFunction} >
          <KTIcon iconName='exit-right' className={btnIconClass} />
         </a>
         
