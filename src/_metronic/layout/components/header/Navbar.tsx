@@ -16,7 +16,6 @@ const Navbar = () => {
 
   const logOutFunction = () => {
     logout()
-    toast.error("Logged out")
   }
 
   return (

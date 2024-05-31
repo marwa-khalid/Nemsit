@@ -8,6 +8,7 @@ import { useAuth } from '../core/Auth';
 import { ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
 
+
 const loginSchema = Yup.object().shape({
   email: Yup.string()
     .email('Wrong email format')
@@ -36,7 +37,7 @@ export function Login() {
     onSubmit: async (values, { setStatus, setSubmitting }) => {
       setLoading(true);
       try {
-        const { data: auth } = await login(values.email, values.password);         
+        const auth  = await login(values.email, values.password);         
         saveAuth(auth);
           
       } catch (error) {
@@ -145,10 +146,10 @@ export function Login() {
           
         </div>
        
-        <ToastContainer 
+        {/* <ToastContainer 
           position="top-center" 
           draggable
-          />
+          /> */}
       </form>
       
     </div>

@@ -6,7 +6,8 @@ import * as authHelper from './AuthHelpers'
 import {getProfileInfo} from './_requests'
 import {WithChildren} from '../../../../_metronic/helpers'
 import { toast,ToastOptions, Id } from 'react-toastify'; 
-import { TraceInfoType } from '../core/_models';
+import { handleError } from './_exception'
+
 type AuthContextProps = {
   auth: AuthModel | undefined
   saveAuth: (auth: AuthModel | undefined) => void
@@ -33,66 +34,36 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
   const [auth, setAuth] = useState<AuthModel | undefined>(authHelper.getAuth())
   const [currentUser, setCurrentUser] = useState<UserModel | undefined>()
 
-  function getToastOptions(messageType: number): { type: string; color: string } {
-    switch (messageType) {
-      case TraceInfoType.Debug:
-        return { type: 'info', color: 'grey' };
-      case TraceInfoType.Success:
-        return { type: 'success', color: 'green' };
-      case TraceInfoType.Information:
-        return { type: 'info', color: 'blue' };
-      case TraceInfoType.Warning:
-        return { type: 'warning', color: 'orange' };
-      case TraceInfoType.Error:
-        return { type: 'error', color: 'red' };
-      case TraceInfoType.Critical:
-        return { type: 'error', color: 'red' };
-      case TraceInfoType.Fatal:
-        return { type: 'error', color: 'red' };
-      case TraceInfoType.UpgradeError:
-        return { type: 'error', color: 'red' };
-      case TraceInfoType.Upgrade:
-        return { type: 'info', color: 'blue' };
-      default:
-        return { type: 'error', color: 'black' }; 
-    }
-  }
+  
 
   const requestUser = async (apiToken: string) => {
     try {
       if (!currentUser) {
-        const {data} = await getProfileInfo(apiToken)
-        if (data) {
-          
+        const data = await getProfileInfo(apiToken)
+        if (data) {  
           setCurrentUser(data)  
+          console.log("hello")
           toast.success("Logged in successfully");
         }
       }
     } catch (error) {
       console.error(error)
-      if (currentUser) {
-        logout()
-      }
     } 
   }
   
   const saveAuth = (auth: AuthModel | undefined) => {
     
     if (auth) {
+      authHelper.setAuth(auth);
       //Check if the token has expired
       if(auth.isValid && auth.result.tokenIsValid){
         console.log("Token is valid");
-        authHelper.setAuth(auth)
+        
         requestUser(auth.result.token);
       }
       else {
-        let errorMessage = auth.messages[0].message
-        let messageType = auth.messages[0].type;
-        saveAuth(undefined);
-        const { type, color } = getToastOptions(messageType);
-        const toastFunction = toast[type as keyof typeof toast] as (errorMessage: string, options?: ToastOptions) => Id;
-        toastFunction(errorMessage);
-        throw new Error(errorMessage);
+       handleError(auth);
+
       }
     } 
     else {
@@ -122,7 +93,7 @@ const AuthInit: FC<WithChildren> = ({children}) => {
     const requestUser = async (apiToken: string) => {
       try {
         if (!currentUser) {
-          const {data} = await getProfileInfo(apiToken)
+          const data = await getProfileInfo(apiToken)
           if (data) {
             console.log(data)
             setCurrentUser(data)
@@ -131,9 +102,6 @@ const AuthInit: FC<WithChildren> = ({children}) => {
         }
       } catch (error) {
         console.error(error)
-        if (currentUser) {
-          logout()
-        }
       } finally {
         setShowSplashScreen(false)
       }
@@ -148,11 +116,9 @@ const AuthInit: FC<WithChildren> = ({children}) => {
       } else {
         console.log("Token has expired. Please log in again.");
      
-        logout();
         setShowSplashScreen(false);
     
     }} else {
-      logout()
       setShowSplashScreen(false)
     }
     // eslint-disable-next-line

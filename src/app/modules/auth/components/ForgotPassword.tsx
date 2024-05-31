@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
 import {requestPassword} from '../core/_requests'
 import { useNavigate } from 'react-router-dom'
+import {toast,ToastContainer} from 'react-toastify'
 const initialValues = {
   email: 'admin@demo.com',
 }
@@ -30,7 +31,8 @@ export function ForgotPassword() {
       setLoading(true)
       setHasErrors(undefined)
      
-      const { data: reset } = await requestPassword(values.email)
+      const reset = await requestPassword(values.email)
+      console.log(reset)
       if(reset.isValid) {
           console.log('Password')
           setHasErrors(false)
@@ -39,7 +41,7 @@ export function ForgotPassword() {
       }
       else{
         let errorMessage = reset.messages[0].message
-        setError(errorMessage)
+        toast.error(errorMessage)
         setHasErrors(true)
         setLoading(false)
         setSubmitting(false)
@@ -80,22 +82,6 @@ export function ForgotPassword() {
           </div>
           {/* end::Link */}
         </div>
-
-        {/* begin::Title */}
-        {hasErrors === true && (
-          <div className='mb-lg-15 alert alert-danger'>
-            <div className='alert-text font-weight-bold'>
-              {error}
-            </div>
-          </div>
-        )}
-
-        {hasErrors === false && (
-          <div className='mb-10 bg-light-info p-8 rounded'>
-            <div className='text-info'>Sent password reset. Please check your email</div>
-          </div>
-        )}
-        {/* end::Title */}
 
         {/* begin::Form group */}
         <div className='fv-row mb-8'>
@@ -146,6 +132,9 @@ export function ForgotPassword() {
             </button>
           </Link>{' '}
         </div>
+        {/* <ToastContainer 
+        position='top-center'
+        /> */}
         {/* end::Form group */}
       </form>
     </div>

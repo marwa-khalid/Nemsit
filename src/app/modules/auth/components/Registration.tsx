@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import { register} from '../core/_requests'
+// import { register} from '../core/_requests'
 import {Link} from 'react-router-dom'
 import {PasswordMeterComponent} from '../../../../_metronic/assets/ts/components'
 import {useAuth} from '../core/Auth'
@@ -52,22 +52,22 @@ export function Registration() {
     validationSchema: registrationSchema,
     onSubmit: async (values, {setStatus, setSubmitting}) => {
       setLoading(true)
-      try {
-        const {data: auth} = await register(
-          values.email,
-          values.firstname,
-          values.lastname,
-          values.password,
-          values.changepassword
-        )
-        saveAuth(auth)
-      } catch (error) {
-        console.error(error)
-        saveAuth(undefined)
-        setStatus('The registration details is incorrect')
-        setSubmitting(false)
-        setLoading(false)
-      }
+      // try {
+      //   const {data: auth} = await register(
+      //     values.email,
+      //     values.firstname,
+      //     values.lastname,
+      //     values.password,
+      //     values.changepassword
+      //   )
+      //   saveAuth(auth)
+      // } catch (error) {
+      //   console.error(error)
+      //   saveAuth(undefined)
+      //   setStatus('The registration details is incorrect')
+      //   setSubmitting(false)
+      //   setLoading(false)
+      // }
     },
   })
 
