@@ -19,6 +19,7 @@ import './_metronic/assets/keenicons/solid/style.css'
 import './_metronic/assets/sass/style.scss'
 import {AppRoutes} from './app/routing/AppRoutes'
 import {AuthProvider} from './app/modules/auth'
+import { ToastContainer } from 'react-toastify'
 /**
  * Creates `axios-mock-adapter` instance for provided `axios` instance, add
  * basic Metronic mocks and returns it.
@@ -39,6 +40,11 @@ if (container) {
     <QueryClientProvider client={queryClient}>
       <MetronicI18nProvider>
         <AuthProvider>
+             <ToastContainer 
+                  position="top-center" 
+                  draggable
+                  autoClose={10000}
+                />
           <AppRoutes />
         </AuthProvider>
       </MetronicI18nProvider>

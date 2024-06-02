@@ -4,13 +4,12 @@ import {PrivateRoutes} from './PrivateRoutes'
 import {ErrorsPage} from '../modules/errors/ErrorsPage'
 import {Logout, AuthPage, useAuth} from '../modules/auth'
 import {App} from '../App'
-import { Registration } from '../modules/auth/components/Registration'
-import { ForgotPassword } from '../modules/auth/components/ForgotPassword'
 
 const {BASE_URL} = import.meta.env
 
 const AppRoutes: FC = () => {
   const {currentUser} = useAuth()
+  console.log(currentUser)
   return (
     <BrowserRouter basename={BASE_URL}>
       <Routes>
@@ -25,8 +24,8 @@ const AppRoutes: FC = () => {
             </>
           ) : (
             <>
-              <Route path='/' element={<AuthPage />} />
-              <Route index element={<Navigate to='/' />} />
+              <Route path='/*' element={<AuthPage />} />
+              <Route path='*' element={<Navigate to='/' />} />
             </>
           )}
         </Route>

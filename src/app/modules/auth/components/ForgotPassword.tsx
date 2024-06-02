@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
-import {requestPassword} from '../core/_requests'
+import {requestResetLink} from '../core/_requests'
 import { useNavigate } from 'react-router-dom'
 import {toast,ToastContainer} from 'react-toastify'
 const initialValues = {
@@ -31,12 +31,13 @@ export function ForgotPassword() {
       setLoading(true)
       setHasErrors(undefined)
      
-      const reset = await requestPassword(values.email)
+      const reset = await requestResetLink(values.email)
       console.log(reset)
       if(reset.isValid) {
           console.log('Password')
           setHasErrors(false)
           setLoading(false)
+          localStorage.setItem('reset_email', values.email)
           navigate('/forgot-password/success',{ state: { textInfo: reset.textInfo } })
       }
       else{

@@ -75,6 +75,7 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
     saveAuth(undefined)
     setCurrentUser(undefined)
     toast.error("Logged out")
+     window.location.href = '/';
   }
 
   return (

@@ -215,13 +215,9 @@ export interface UserResult {
 }
 
 export interface PasswordResetResult {
-  isValid: boolean;
-  textInfo: string;
-  messages: {
-    message: string;
-    type: number;
-  }[];
-  hasErrors: boolean;
+  languageType: 0,
+  emailAddress: string,
+  passwordResetToken: string
 }
 
 

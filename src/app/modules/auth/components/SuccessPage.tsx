@@ -9,7 +9,7 @@ export function SuccessPage() {
         textInfo: string;
     }
     const location = useLocation();
-    const state = location.state as LocationState; // Type assertion
+    const state = location.state as LocationState;
     const resetTextInfo = state?.textInfo;
     
     return (
