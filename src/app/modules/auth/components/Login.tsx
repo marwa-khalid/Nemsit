@@ -65,8 +65,7 @@ export function Login() {
         onSubmit={formik.handleSubmit}
         noValidate
         id='kt_login_signin_form'
-        >
-      
+      >
 
         {/* Large text: Sign In */}
         <div className='text-start mb-5'>

@@ -2,15 +2,15 @@ import { toast, ToastOptions, Id } from 'react-toastify';
 import { TraceInfoType } from './_models';
 
 // Utility function to handle errors
-export function handleError(response:any) {
-    let errorMessage = response.messages[0].message
+export function handleToast(response:any) {
+    let message = response.messages[0].message
     let messageType = response.messages[0].type;
 
     if (response && response.messages && response.messages.length > 0) {
-        errorMessage = response.messages[0].message;
+        message = response.messages[0].message;
         messageType = response.messages[0].type;
     } else if (response instanceof Error) {
-        errorMessage = response.message;
+        message = response.message;
     }
 
     // Define toast options based on message type
@@ -40,8 +40,13 @@ export function handleError(response:any) {
     }
 
     const { type, color } = getToastOptions(messageType);
-    const toastFunction = toast[type as keyof typeof toast] as (errorMessage: string, options?: ToastOptions) => Id;
-    toastFunction(errorMessage);
+    
+    const toastFunction = toast[type as keyof typeof toast] as (message: string, options?: ToastOptions) => Id;
+    toastFunction(message);
 
-    throw new Error(errorMessage);
+    if(response.hasErrors){
+        throw new Error(message);
+    }else{
+        return
+    }
 }

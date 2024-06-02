@@ -6,7 +6,7 @@ import * as authHelper from './AuthHelpers'
 import {getProfileInfo} from './_requests'
 import {WithChildren} from '../../../../_metronic/helpers'
 import { toast,ToastOptions, Id } from 'react-toastify'; 
-import { handleError } from './_exception'
+import { handleToast } from './_toast'
 
 type AuthContextProps = {
   auth: AuthModel | undefined
@@ -58,12 +58,11 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
       //Check if the token has expired
       if(auth.isValid && auth.result.tokenIsValid){
         console.log("Token is valid");
-        
         requestUser(auth.result.token);
+        // handleToast(auth);
       }
       else {
-       handleError(auth);
-
+       handleToast(auth);
       }
     } 
     else {
@@ -75,7 +74,6 @@ const AuthProvider: FC<WithChildren> = ({children}) => {
     saveAuth(undefined)
     setCurrentUser(undefined)
     toast.error("Logged out")
-     window.location.href = '/';
   }
 
   return (

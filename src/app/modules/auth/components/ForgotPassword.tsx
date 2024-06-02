@@ -6,8 +6,9 @@ import {useFormik} from 'formik'
 import {requestResetLink} from '../core/_requests'
 import { useNavigate } from 'react-router-dom'
 import {toast,ToastContainer} from 'react-toastify'
+import { handleToast } from '../core/_toast'
 const initialValues = {
-  email: 'admin@demo.com',
+  email: '',
 }
 
 const forgotPasswordSchema = Yup.object().shape({
@@ -41,8 +42,8 @@ export function ForgotPassword() {
           navigate('/forgot-password/success',{ state: { textInfo: reset.textInfo } })
       }
       else{
-        let errorMessage = reset.messages[0].message
-        toast.error(errorMessage)
+        
+        handleToast(reset);
         setHasErrors(true)
         setLoading(false)
         setSubmitting(false)
