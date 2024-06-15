@@ -21,9 +21,6 @@ export interface AuthResult {
   canRedirectToModule: boolean;
 }
 
-export type AuthModel = ApiResponse<AuthResult>;
-
-
 export interface UserResult {
   subscriberId: number;
   person: {
@@ -215,59 +212,86 @@ export interface UserResult {
 }
 
 export interface PasswordResetResult {
-  languageType: 0,
-  emailAddress: string,
-  passwordResetToken: string
+  languageType: 0;
+  emailAddress: string;
+  passwordResetToken: string;
 }
 
+export interface SepaResult {
+  id: number;
+  taskId: number;
+  isBusiness: boolean;
+  companyName: string;
+  emailAddress: string;
+  sepaIsAllreadyValidated: boolean;
+  vatNumber: string;
+  registrationNumber: string;
+  ibanNumber: string;
+  firstName: string;
+  betweenName: string;
+  lastName: string;
+  subscriptionDescription: string;
+  subscriberCompanyName: string;
+  subscriberCompanySupportEmailAddress: string;
+  subscriberCompanyWebUrl: string;
+  subscriberCompanyLogoUrl: string;
+  clientHasActiveSepaMandate: boolean;
+  sepaMandateReference: string;
+  sepaMandateSignatureDate: string;
+  hasEmail: boolean;
+  hasIbanNumber: boolean;
+  hasVatNumber: boolean;
+  hasRegistrationNumber: boolean;
+  fullName: string;
+  paymentRedirectUrl: string;
+  resultType: number;
+}
 
 // Specific models
-
+export type AuthModel = ApiResponse<AuthResult>;
 export type UserModel = ApiResponse<UserResult>;
-export type PasswordResetModel = ApiResponse<PasswordResetResult>
-
+export type PasswordResetModel = ApiResponse<PasswordResetResult>;
+export type SepaModel = ApiResponse<SepaResult>;
 
 export interface UserAddressModel {
-  addressLine: string
-  city: string
-  state: string
-  postCode: string
+  addressLine: string;
+  city: string;
+  state: string;
+  postCode: string;
 }
 
-
 export interface UserCommunicationModel {
-  email: boolean
-  sms: boolean
-  phone: boolean
+  email: boolean;
+  sms: boolean;
+  phone: boolean;
 }
 
 export interface UserEmailSettingsModel {
-  emailNotification?: boolean
-  sendCopyToPersonalEmail?: boolean
+  emailNotification?: boolean;
+  sendCopyToPersonalEmail?: boolean;
   activityRelatesEmail?: {
-    youHaveNewNotifications?: boolean
-    youAreSentADirectMessage?: boolean
-    someoneAddsYouAsAsAConnection?: boolean
-    uponNewOrder?: boolean
-    newMembershipApproval?: boolean
-    memberRegistration?: boolean
-  }
+    youHaveNewNotifications?: boolean;
+    youAreSentADirectMessage?: boolean;
+    someoneAddsYouAsAsAConnection?: boolean;
+    uponNewOrder?: boolean;
+    newMembershipApproval?: boolean;
+    memberRegistration?: boolean;
+  };
   updatesFromKeenthemes?: {
-    newsAboutKeenthemesProductsAndFeatureUpdates?: boolean
-    tipsOnGettingMoreOutOfKeen?: boolean
-    thingsYouMissedSindeYouLastLoggedIntoKeen?: boolean
-    newsAboutStartOnPartnerProductsAndOtherServices?: boolean
-    tipsOnStartBusinessProducts?: boolean
-  }
+    newsAboutKeenthemesProductsAndFeatureUpdates?: boolean;
+    tipsOnGettingMoreOutOfKeen?: boolean;
+    thingsYouMissedSindeYouLastLoggedIntoKeen?: boolean;
+    newsAboutStartOnPartnerProductsAndOtherServices?: boolean;
+    tipsOnStartBusinessProducts?: boolean;
+  };
 }
 
 export interface UserSocialNetworksModel {
-  linkedIn: string
-  facebook: string
-  twitter: string
-  instagram: string
+  linkedIn: string;
+  facebook: string;
+  twitter: string;
+  instagram: string;
 }
-
 
 export enum TraceInfoType {
   Debug = 0,
@@ -278,5 +302,5 @@ export enum TraceInfoType {
   Critical = 5,
   Fatal = 6,
   UpgradeError = 99,
-  Upgrade = 98
+  Upgrade = 98,
 }
