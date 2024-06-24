@@ -7,7 +7,7 @@ import { MenuTestPage } from "../pages/MenuTestPage";
 import { getCSSVariableValue } from "../../_metronic/assets/ts/_utils";
 import { WithChildren } from "../../_metronic/helpers";
 import BuilderPageWrapper from "../pages/layout-builder/BuilderPageWrapper";
-
+import VatTypes from "../pages/admin/VatTypes/VatTypes";
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import("../modules/profile/ProfilePage"));
   const WizardsPage = lazy(() => import("../modules/wizards/WizardsPage"));
@@ -18,6 +18,8 @@ const PrivateRoutes = () => {
     () => import("../modules/apps/user-management/UsersPage")
   );
 
+  // const VatTypes = lazy(() => import("../pages/admin/VatTypes/VatTypes"));
+
   return (
     <Routes>
       <Route element={<MasterLayout />}>
@@ -25,9 +27,9 @@ const PrivateRoutes = () => {
         <Route path="/*" element={<Navigate to="/dashboard" />} />
         {/* Pages */}
         <Route path="dashboard" element={<DashboardWrapper />} />
-
         <Route path="builder" element={<BuilderPageWrapper />} />
         <Route path="menu-test" element={<MenuTestPage />} />
+        <Route path="admin/vattype" element={<VatTypes />} />
         {/* Lazy Modules */}
         <Route
           path="crafted/pages/profile/*"
@@ -69,6 +71,15 @@ const PrivateRoutes = () => {
             </SuspensedView>
           }
         />
+
+        {/* <Route
+          path="/admin/*"
+          element={
+            <SuspensedView>
+              <VatTypes />
+            </SuspensedView>
+          }
+        /> */}
         <Route
           path="apps/user-management/*"
           element={

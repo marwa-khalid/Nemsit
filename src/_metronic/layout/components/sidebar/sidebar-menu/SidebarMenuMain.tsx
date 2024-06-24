@@ -7,7 +7,7 @@ const SidebarMenuMain = () => {
   const intl = useIntl();
 
   return (
-    <div style={{ marginBottom: "20px" }}>
+    <div className="fs-xl fw-bold " style={{ marginBottom: "20px" }}>
       <SidebarMenuItem
         to="/dashboard"
         icon="ki-outline ki-home"
@@ -171,6 +171,24 @@ const SidebarMenuMain = () => {
         <SidebarMenuItem
           to="/apps/chat/drawer-chat"
           title="Drawer Chart"
+          hasBullet={true}
+        />
+      </SidebarMenuItemWithSub>
+      <SidebarMenuItemWithSub
+        to="/admin"
+        title="Admin"
+        fontIcon="bi-chat-left"
+        icon="message-text-2"
+      >
+        <SidebarMenuItem
+          to="/admin/vattype"
+          title="Vat Types"
+          hasBullet={true}
+        />
+
+        <SidebarMenuItem
+          to="/admin/ledgeraccounts"
+          title="Ledger Accounts"
           hasBullet={true}
         />
       </SidebarMenuItemWithSub>

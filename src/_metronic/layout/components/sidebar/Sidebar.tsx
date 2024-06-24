@@ -3,7 +3,6 @@ import clsx from "clsx";
 import { useEffect, useRef } from "react";
 import { ILayout, useLayout } from "../../core";
 import { SidebarMenu } from "./sidebar-menu/SidebarMenu";
-import { SidebarFooter } from "./SidebarFooter";
 import { SidebarLogo } from "./SidebarLogo";
 
 const Sidebar = () => {
@@ -17,7 +16,7 @@ const Sidebar = () => {
   if (!config.app?.sidebar?.display) {
     return null;
   }
-  console.log(config.layoutType);
+
   return (
     <>
       {(config.layoutType === "dark-sidebar" ||

@@ -189,6 +189,21 @@ export function MenuInner() {
             hasBullet={true}
           />
         </MenuInnerWithSub>
+        <MenuInnerWithSub
+          title="Admin"
+          to="/admin"
+          icon="message-text-2"
+          hasArrow={true}
+          menuPlacement="right-start"
+          menuTrigger={`{default:'click', lg: 'hover'}`}
+        >
+          <MenuItem to="/admin/vattype" title="Vat Types" hasBullet={true} />
+          <MenuItem
+            to="/admin/ledgeraccount"
+            title="Ledger Account"
+            hasBullet={true}
+          />
+        </MenuInnerWithSub>
         <MenuItem
           icon="abstract-28"
           to="/apps/user-management/users"

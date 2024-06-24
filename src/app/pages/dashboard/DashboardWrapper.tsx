@@ -24,7 +24,7 @@ import { Content } from "../../../_metronic/layout/components/content";
 
 const DashboardPage: FC = () => (
   <>
-    {/* <ToolbarWrapper /> */}
+    <ToolbarWrapper />
     <Content>
       {/* begin::Row */}
       <div className="row g-4 g-xl-10  mb-xl-10 rounded ">
@@ -125,7 +125,7 @@ const DashboardWrapper: FC = () => {
         "bg-white": config.layoutType === "light-sidebar",
         "bg-dark": config.layoutType === "dark-sidebar",
       })}
-      // style={{ maxHeight: 'calc(100vh - 120px)', overflowY: 'auto'}}
+      style={{ maxHeight: "calc(100vh - 120px)", overflowY: "auto" }}
     >
       <PageTitle breadcrumbs={[]}>
         {intl.formatMessage({ id: "Menu.Dashboard" })}
