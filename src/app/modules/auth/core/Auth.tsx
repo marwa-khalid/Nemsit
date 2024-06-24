@@ -49,7 +49,7 @@ const AuthProvider: FC<WithChildren> = ({ children }) => {
         if (data) {
           setCurrentUser(data);
           console.log("hello");
-          toast.success("Logged in successfully");
+          toast.success("succesvol ingelogd");
         }
       }
     } catch (error) {
@@ -76,7 +76,7 @@ const AuthProvider: FC<WithChildren> = ({ children }) => {
   const logout = () => {
     saveAuth(undefined);
     setCurrentUser(undefined);
-    toast.error("Logged out");
+    toast.error("Uitgelogd");
   };
 
   return (
@@ -95,13 +95,13 @@ const AuthInit: FC<WithChildren> = ({ children }) => {
   useEffect(() => {
     const requestUser = async () => {
       try {
-        // if (!currentUser) {
-        //   const data = await getProfileInfo();
-        //   if (data) {
-        console.log("hello");
-        //     setCurrentUser(data);
-        //   }
-        // }
+        if (!currentUser) {
+          const data = await getProfileInfo();
+          if (data) {
+            console.log("hello");
+            setCurrentUser(data);
+          }
+        }
       } catch (error) {
         console.error(error);
       } finally {

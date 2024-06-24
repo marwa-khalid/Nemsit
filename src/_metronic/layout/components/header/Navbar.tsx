@@ -25,7 +25,7 @@ const Navbar = () => {
 
   const logOutFunction = () => {
     logout();
-    toast.info("Logged out successfully!");
+    // toast.info("Logged out successfully!");
   };
 
   return (
