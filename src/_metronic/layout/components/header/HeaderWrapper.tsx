@@ -29,7 +29,7 @@ export function HeaderWrapper() {
       <div
         id="kt_app_header_container"
         className={clsx(
-          "app-container",
+          "main mx-2",
           classes.headerContainer.join(" "),
           config.app?.header?.default?.containerClass,
           {
@@ -43,7 +43,7 @@ export function HeaderWrapper() {
             {config.layoutType !== "dark-header" &&
             config.layoutType !== "light-header" ? (
               <div
-                className="d-flex align-items-center d-lg-none ms-n2 me-2"
+                className="d-flex align-items-center d-lg-none ms-n2 me-2 mt-6"
                 title="Show sidebar menu"
               >
                 <div
@@ -56,8 +56,8 @@ export function HeaderWrapper() {
                   <Link to="/dashboard" className="d-lg-none">
                     <img
                       alt="Logo"
-                      src={toAbsoluteUrl("media/logos/demo39.svg")}
-                      className="h-30px"
+                      src={toAbsoluteUrl("media/logos/invoicehippo_art01.svg")}
+                      className="h-170px w-150px"
                     />
                   </Link>
                 </div>
@@ -97,7 +97,7 @@ export function HeaderWrapper() {
         )}
         <div
           id="kt_app_header_wrapper"
-          className="d-flex align-items-stretch justify-content-between flex-lg-grow-1 mt-6 mb-4"
+          className="d-flex align-items-stretch justify-content-between flex-lg-grow-1 mt-6 mt-lg-9"
         >
           {config.app.header.default?.content === "menu" &&
             config.app.header.default.menu?.display && (
@@ -108,7 +108,7 @@ export function HeaderWrapper() {
                 data-kt-drawer-activate="{default: true, lg: false}"
                 data-kt-drawer-overlay="true"
                 data-kt-drawer-width="225px"
-                data-kt-drawer-direction="end"
+                data-kt-drawer-direction="start"
                 data-kt-drawer-toggle="#kt_app_header_menu_toggle"
                 data-kt-swapper="true"
                 data-kt-swapper-mode="{default: 'append', lg: 'prepend'}"

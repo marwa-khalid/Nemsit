@@ -21,15 +21,16 @@ const Header: FC = () => {
         fw-semibold
         px-2 px-lg-0
         rounded-lg-6
+        
     "
       id="kt_app_header_menu"
       data-kt-menu="true"
     >
       <div className="position-relative">
-        <i className="ki-outline ki-magnifier search-icon fs-2 text-gray-500 position-absolute top-50 start-0 ms-3 mt-1 translate-middle-y"></i>
+        <i className="ki-outline ki-magnifier search-icon fs-1 text-gray-500 position-absolute top-50 start-0 ms-3 translate-middle-y"></i>
         <input
           type="text"
-          className="search-input form-control form-control border h-lg-45px rounded-lg ps-13 pl-5"
+          className="search-input form-control form-control border w-lg-400px   h-lg-45px rounded-lg ps-13 pl-5"
           name="search"
           value=""
           placeholder={intl.formatMessage({ id: "Fields.SearchBtn" })}
