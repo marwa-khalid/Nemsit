@@ -94,7 +94,7 @@ const Navbar = () => {
             userAvatarClass,
             largeBtnClass
           )}
-          data-kt-menu-trigger="{default: 'click'}"
+          data-kt-menu-trigger="{default: 'hover'}"
           data-kt-menu-attach="parent"
           data-kt-menu-placement="bottom-end"
         >
