@@ -39,8 +39,8 @@ if (container) {
   createRoot(container).render(
     <QueryClientProvider client={queryClient}>
       <MetronicI18nProvider>
+        <ToastContainer position="top-center" draggable autoClose={5000} />
         <AuthProvider>
-          <ToastContainer position="top-center" draggable autoClose={10000} />
           <AppRoutes />
         </AuthProvider>
       </MetronicI18nProvider>

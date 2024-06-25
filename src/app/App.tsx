@@ -12,14 +12,10 @@ const App = () => {
       <I18nProvider>
         <LayoutProvider>
           <ThemeModeProvider>
+            <ToastContainer position="top-center" draggable autoClose={5000} />
             <AuthInit>
               <Outlet />
               <MasterInit />
-              <ToastContainer
-                position="top-center"
-                draggable
-                autoClose={10000}
-              />
             </AuthInit>
           </ThemeModeProvider>
         </LayoutProvider>
