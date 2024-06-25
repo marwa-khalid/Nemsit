@@ -95,13 +95,13 @@ const AuthInit: FC<WithChildren> = ({ children }) => {
   useEffect(() => {
     const requestUser = async () => {
       try {
-        if (!currentUser) {
-          const data = await getProfileInfo();
-          if (data) {
+        // if (!currentUser) {
+        //   const data = await getProfileInfo();
+        //   if (data) {
             console.log("hello");
-            setCurrentUser(data);
-          }
-        }
+        //     setCurrentUser(data);
+        //   }
+        // }
       } catch (error) {
         console.error(error);
       } finally {
